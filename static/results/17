@@ -1,0 +1,6 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	graph [rankdir=LR]
+	test [color=black]
+}

@@ -1,0 +1,6 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	graph [rankdir=LR]
+	"中国政府が電子商取引（ＥＣ）の規制を強化したことなどを受け、市場センチメントが低下している" [color=black]
+}

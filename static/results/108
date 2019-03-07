@@ -1,0 +1,6 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	graph [rankdir=LR]
+	"米中貿易摩擦の具体的な影響が顧客に出ている感触はまだないが、センチメントには影響を与え、様子見モードが顧客に広がってきている" [color=black]
+}

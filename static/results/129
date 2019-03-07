@@ -1,0 +1,6 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	graph [rankdir=LR]
+	"FRBによる利上げが悪影響" [color=black]
+}

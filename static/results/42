@@ -1,0 +1,6 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	graph [rankdir=LR]
+	"時短営業によるマイナスの影響" [color=black]
+}

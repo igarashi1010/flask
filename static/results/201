@@ -1,0 +1,6 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	graph [rankdir=LR]
+	"一部のウエハーメーカーで能力増強計画は延期される可能性があり、キャンセルが検討されている計画もある" [color=black]
+}

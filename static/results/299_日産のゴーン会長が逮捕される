@@ -1,0 +1,5 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	"日産のゴーン会長が逮捕される" [color=black]
+}

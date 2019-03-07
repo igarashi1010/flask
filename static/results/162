@@ -1,0 +1,6 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	graph [rankdir=LR]
+	"電線メーカーのフジクラで発覚した検査不正について、競争が厳しい業界であり、今後の受注活動に悪影響が出るリスクはある" [color=black]
+}

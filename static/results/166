@@ -1,0 +1,6 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	graph [rankdir=LR]
+	"北海道地震の影響で、札幌や小樽、函館、旭川など北海道エリアのビジネスホテルが影響を受ける" [color=black]
+}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>新規分析</h1>
+<form action="{{ url_for('analysis') }}" method="post">
+
+	<p>
+		<label>階層 </label>
+	    <select name="layer_num">
+	    	<option value="1" selected>1</option>
+	    	<option value="2">2</option>
+	    	<option value="3">3</option>
+	    	<option value="4">4</option>
+	    	<option value="5">5</option>
+	    </select>
+	</p>
+<!-- 
+	<label>業種</label>
+    <textarea class="form-control" name="sector" rows="1">all</textarea> -->
+
+    <p>
+	    <label>業種 </label>
+	    <select name="sector">
+	    	<option value="all" selected>全ての業種</option>
+	    	{% for item in l %}
+	    	<option value="{{item.sector_code}}">{{item.sector_code}}: {{item.sector_name}}</option>
+	    	{% endfor %})
+	    </select>
+	</p>
+
+    <p>
+	    <label>探索期間~開始~</label>
+	    <textarea class="form-control" name="from_date" rows="1">20120101</textarea>
+	</p>
+
+    <p>
+	    <label>探索期間~終了~</label>
+	    <textarea class="form-control" name="to_date" rows="1">20180101</textarea>
+	</p>
+   
+    <p>
+		<label>閾値</label>
+    	<textarea class="form-control" name="thre" rows="1">0.9</textarea>
+	</p>
+
+    <p>
+	    <label>探索方向</label>
+	    <select name="direction">
+	    	<option value="upward">遡上方向</option>
+	    	<option value="downward" selected>波及方向</option>
+	    </select>
+	</p>
+	<p>
+	    <label>極性判定による枝刈り</label>
+	    <select name="use_sentiment">
+	    	<option value="1">使う</option>
+	    	<option value="0" selected>使わない</option>
+	    </select>
+	</p>
+	<p>
+	    <label>入力文</label>
+	    <textarea class="form-control" name="risk" rows="2">株価の上昇</textarea>
+	    <input class="btn btn-primary" type="submit" value="送信"> 
+	</p>
+</form>
+{% endblock %}

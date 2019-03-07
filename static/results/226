@@ -1,0 +1,6 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	graph [rankdir=LR]
+	"台風21号が関西国際空港に甚大な被害をもたらすなど自然災害の影響" [color=black]
+}

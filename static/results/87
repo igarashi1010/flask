@@ -1,0 +1,6 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	graph [rankdir=LR]
+	"19年１月１日から中国で施行される新ＥＣ法が厳格に運営され、代購業者の売上高が大きく減少する" [color=black]
+}

@@ -1,0 +1,12 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	graph [rankdir=LR]
+	"株価の上昇" -> "20171110_7494_0002
+株価の上昇
+投資有価証券が９億１８百万円増加し" [label=1.0 color="1.0 1.0 1.0"]
+	"株価の上昇" [color=black]
+	"20171110_7494_0002
+株価の上昇
+投資有価証券が９億１８百万円増加し" [color=black]
+}

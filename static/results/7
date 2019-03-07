@@ -1,0 +1,6 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	graph [rankdir=LR]
+	"国内外の大規模集客施設などにおいてテロ事件や感染症が流行し、レジャーに対する消費マインドが冷え込む。" [color=black]
+}

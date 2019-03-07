@@ -1,0 +1,6 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	graph [rankdir=LR]
+	"同社従業員が建設資金の借り入れ希望者の預金通帳を改ざん" [color=black]
+}

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>結果参照</h1>
+ 
+<h3>{{condition.RiskID}}: {{condition.RiskSentence}}</h3>
+<table class="table table-striped table-hover">
+    <tr>
+        <th>ID</th>
+        <th>実行日時</th>
+        <th>入力文</th>
+        <th>階層</th>
+        <th>業種</th>
+        <th>探索期間~開始</th>
+        <th>探索期間~終了</th>
+        <th>閾値</th>
+        <th>探索方向</th>
+        <th>極性判定</th>
+        <th>操作</th>
+    </tr>
+    <tr>
+        <td>{{condition.RiskID}}</td>
+        <td>{{condition.AnalyzeDate}}</td>
+        <td>{{condition.RiskSentence}}</td>
+        <td>{{condition.LayerNum}}</td>
+        <td>{{condition.Sector}}</td>
+        <td>{{condition.FromDate}}</td>
+        <td>{{condition.ToDate}}</td>
+        <td>{{condition.Threshold}}</td>
+        <td>{{condition.Direction}}</td>
+        <td>{{condition.UseSentiment}}</td>
+        <td>
+            <a href="{{ url_for('view_result',ID=condition.RiskID) }}">参照</a>
+            <a href="{{ url_for('delete_result', ID=condition.RiskID) }}">削除</a>
+        </td>
+    </tr>
+</table> 
+
+<form action="{{ url_for('annotate', ID=condition.RiskID) }}" method="post">
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>EdgeID</th>
+            <th>RiskID</th>
+            <th>階層</th>
+            <th>上流</th>
+            <th>下流</th>
+            <th>類似度</th>
+            <th>操作</th>
+        </tr>
+        {% for edge in edges %}
+
+        <tr>
+            <td>{{edge.EdgeID}}</td>
+            <td>{{edge.RiskID}}</td>
+            <td>{{edge.Layer}}</td>
+            <td>{{edge.FromNode}}</td>
+            <td>{{edge.ToNode}}</td>
+            <td>{{edge.Similarity}}</td>
+            <td>
+                <label><input type="radio" name="{{edge.EdgeID}}" value="1">Bad</label>
+                <label><input type="radio" name="{{edge.EdgeID}}" value="2">Neutral</label>
+                <label><input type="radio" name="{{edge.EdgeID}}" value="3">Good</label>
+            </td>
+        </tr>
+        {% endfor %}
+    </table> 
+    <input class="btn btn-primary" type="submit" value="アノテーション結果送信"> 
+</form>
+<div class="row">
+    <img src="{{img_path}}" alt="result_png">
+
+
+</div>
+ 
+<br><br>
+{% endblock %}

@@ -1,0 +1,6 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	graph [rankdir=LR]
+	"金属市況下落に伴う在庫評価損、酸化タンタルの低価法による損失５億円" [color=black]
+}

@@ -1,0 +1,6 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	graph [rankdir=LR]
+	"犯罪等により顧客情報が外部に漏洩したことで、顧客個人に損害賠償を行う。" [color=black]
+}

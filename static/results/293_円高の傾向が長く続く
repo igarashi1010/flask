@@ -1,0 +1,5 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	"円高の傾向が長く続く" [color=black]
+}

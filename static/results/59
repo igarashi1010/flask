@@ -1,0 +1,6 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	graph [rankdir=LR]
+	"人口動態やプロダクトのライフサイクル、節約志向などを背景に食品のトップラインが切り下がり、利益は安定成長期から停滞期に移行" [color=black]
+}

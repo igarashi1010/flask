@@ -1,0 +1,5 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	"個人情報が大量に流出し安全性に対する信頼性が揺らぐ" [color=black]
+}

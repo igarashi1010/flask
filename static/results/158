@@ -1,0 +1,6 @@
+digraph {
+	node [color=black fontsize=8 shape=box]
+	edge [fontsize=8]
+	graph [rankdir=LR]
+	"ＯＰＥＣ加盟国と非加盟国による６月の合意は「既に失効」している" [color=black]
+}
