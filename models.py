@@ -13,7 +13,8 @@ import networkx as nx
 from graphviz import Digraph
 import urllib
 from matplotlib.backends.backend_agg import FigureCanvasAgg
-def get_relations(con, mecab, model, data_dict, tablename, topn):
+
+def get_relations(con, mecab, model, data_dict, event_tablename, kessan_tablename, topn):
 
     # date = data_dict["Date"]
     layer_num = data_dict['LayerNum']
@@ -47,48 +48,69 @@ def get_relations(con, mecab, model, data_dict, tablename, topn):
     OUTPUT: 銘柄コード、記事（探信 or 新聞）の発行日時のdict
     """
     print("探索対象を探しています..........")
-    search_area = nlptools.define_search_area(con=con, sector=sector, from_date=from_date, to_date=to_date, 
-        table_name=tablename, stopwords=stopwords)
+
+    event_search_area = nlptools.define_search_area(con=con, sector=sector, from_date=from_date, to_date=to_date, 
+        table_name=event_tablename, stopwords=stopwords)
+
+    kessan_search_area = nlptools.define_search_area(con=con, sector=sector, from_date=from_date, to_date=to_date, 
+        table_name=kessan_tablename, stopwords=stopwords)
+
     valid_keys=["id", "cause", "result", "cause_vec", "result_vec", "cause_sentiment", "result_sentiment"]
-    valid_search_dict = nlptools.filter_necessary_data(search_area, valid_keys)
-    print("{}件のレコードが該当します".format(len(valid_search_dict.keys())))
+    event_valid_search_dict = nlptools.filter_necessary_data(event_search_area, valid_keys)
+    kessan_valid_search_dict = nlptools.filter_necessary_data(kessan_search_area, valid_keys)
 
     """3. 実際に探索
     INPUT: 探索対象dict、Layer_num
     OUTPUT: 階層、類似度、文、銘柄、発行日時のdict
     """
-    results = []
+
     print("探索開始: ", risk)
     print("Making initial result")
-    initial_result = nlptools.make_init_result(direction=direction, search_dict=valid_search_dict, 
+    # results = []
+    # initial_result = nlptools.make_init_result(direction=direction, search_dict=valid_search_dict, 
+    #     thre=thre, init_sentence=risk, init_vec=risk_vec, use_sentiment=use_sentiment, init_sentiment=risk_sentiment, topn=topn)
+    # results.append(initial_result)
+    # """
+    # 1-3をLayer_numだけループする
+    # """
+    # result = initial_result
+    # result_count=len(result.keys())
+    # print("1st result: {}".format(result_count))
+    # for i in range(1, layer_num):
+    #     layer = i+1
+    #     print("layer_{} is creating".format(layer))
+    #     result = result = nlptools.search_causeal_relations(direction=direction, search_dict=valid_search_dict, thre=thre, old_result=result,
+    #             use_sentiment=use_sentiment, topn=topn)
+    #     result_count=len(result.keys())
+    #     print("result: {}".format(result_count))
+    #     results.append(result)
+    #     # while result.values():
+    #     #     print("layer_{} is creating".format(layer))
+    #     #     result = nlptools.search_causeal_relations(direction=direction, search_dict=valid_search_dict, thre=thre, old_result=result,
+    #     #         use_sentiment=use_sentiment)
+    results = []
+    if layer_num == 1:
+        result = nlptools.make_init_result(direction=direction, search_dict=kessan_valid_search_dict, 
         thre=thre, init_sentence=risk, init_vec=risk_vec, use_sentiment=use_sentiment, init_sentiment=risk_sentiment, topn=topn)
-    results.append(initial_result)
-    """
-    1-3をLayer_numだけループする
-    """
-    result = initial_result
-    result_count=len(result.keys())
-    print("1st result: {}".format(result_count))
-    for i in range(1, layer_num):
-        layer = i+1
-        print("layer_{} is creating".format(layer))
-        result = result = nlptools.search_causeal_relations(direction=direction, search_dict=valid_search_dict, thre=thre, old_result=result,
-                use_sentiment=use_sentiment, topn=topn)
-        result_count=len(result.keys())
-        print("result: {}".format(result_count))
         results.append(result)
-        # while result.values():
-        #     print("layer_{} is creating".format(layer))
-        #     result = nlptools.search_causeal_relations(direction=direction, search_dict=valid_search_dict, thre=thre, old_result=result,
-        #         use_sentiment=use_sentiment)
+    else:
+        initial_result = nlptools.make_init_result(direction=direction, search_dict=event_valid_search_dict, 
+            thre=thre, init_sentence=risk, init_vec=risk_vec, use_sentiment=use_sentiment, init_sentiment=risk_sentiment, topn=topn)
+        results.append(initial_result)
+        result = initial_result
+        for i in range(layer_num-2):
+            result = nlptools.search_causeal_relations(direction=direction, search_dict=event_valid_search_dict, thre=thre, old_result=result,
+                use_sentiment=use_sentiment, topn=topn)
+            results.append(result)
+        result = search_causeal_relations(direction=direction, search_dict=kessan_valid_search_dict, thre=thre, old_result=result,
+                use_sentiment=use_sentiment, topn=topn)
+        results.append(result)
     node_list, edge_list = nlptools.get_node_edge(results=results, init_sentence=risk, direction=direction)
 
     """
      *センチメント情報の獲得*
      """    
     node_sentiment_dict, node_sentiment_pair_dict = get_node_sentiment(con, tablename, node_list)
-
-
     return node_list, edge_list, valid_search_dict, risk_sentiment, node_sentiment_dict, node_sentiment_pair_dict
 
 def query2list(con, query):
@@ -150,7 +172,6 @@ def insert_result(con, TABLENAME, ID, edge_list, date):
         insert_sql = insert_column + s + ";"
         cur = con.cursor()
         cur.execute(insert_sql)
-        print
         con.commit()
 
 def delete(con, TABLENAME ,ID):

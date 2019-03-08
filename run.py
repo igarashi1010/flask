@@ -103,7 +103,7 @@ def analysis():
     }
     
     node_list, edge_list, valid_search_dict, risk_sentiment, node_sentiment_dict, node_sentiment_pair_dict = models.get_relations(con, mecab, model, data_dict, 
-        tablename=data_table, topn=5)
+        event_tablename=event_table, kessan_tablename=kessan_table, topn=5)
 
     search_count = len(valid_search_dict.keys())
     search_result = [search_count, node_list, edge_list]
@@ -185,7 +185,8 @@ if __name__ == '__main__':
     if test_flag:
         data_table = app.config['TEST_TABLENAME']
     else:
-        data_table = app.config['FR_TABLENAME']
+        event_table = app.config['EVENT_TABLENAME']
+        kessan_table = app.config['KESSAN_TABLENAME']
         # data_table = app.config['FR2_TABLENAME']
 
     # app.run(debug=True)

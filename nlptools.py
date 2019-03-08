@@ -81,7 +81,7 @@ def noun2vec(noun_list, model, idf_dict):
     vecs = np.empty((0,model.vector_size), float)
     idfs = np.array([])
     for noun in noun_list:
-        
+
         try:
             vec = model.wv[noun].reshape(1, model.vector_size)
         except:
@@ -157,12 +157,10 @@ def define_search_area(con, sector, from_date, to_date, table_name, stopwords):
             filter_sql += """
             AND (`result_noun` NOT LIKE "%{WORD}%" AND `cause_noun` NOT LIKE "%{WORD}%")
             """.format(WORD=word)
-
     if sector == "all":
         pass
     else:
         filter_sql += "AND `sector_code`= {SECTOR}".format(SECTOR=sector)
-    print(filter_sql)
     l = models.query2list(con, filter_sql)
     return l
 
@@ -294,8 +292,9 @@ def search_causeal_relations(direction, search_dict, thre, old_result, use_senti
                 l = filter_topn_result(l ,topn)
                 new_result[from_node] = l
                 print("{}個の子ノードが見つかりました".format(len(l)))
-
     return new_result
+
+
 
 def show_2sentences(search_dict, direction, id1, id2):   
     if direction == "downward":
