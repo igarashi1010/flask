@@ -89,7 +89,6 @@ def noun2vec(noun_list, model, idf_dict):
                 vec = model.wv["[" + noun + "]"].reshape(1, model.vector_size)
             except:
                 vec = np.zeros((1,model.vector_size))
-
         
         if noun in idf_dict.keys():
             idf = idf_dict[noun]

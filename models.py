@@ -90,19 +90,23 @@ def get_relations(con, mecab, model, data_dict, event_tablename, kessan_tablenam
     #     #         use_sentiment=use_sentiment)
     results = []
     if layer_num == 1:
+        print("risk-->event")
         result = nlptools.make_init_result(direction=direction, search_dict=kessan_valid_search_dict, 
         thre=thre, init_sentence=risk, init_vec=risk_vec, use_sentiment=use_sentiment, init_sentiment=risk_sentiment, topn=topn)
         results.append(result)
     else:
+        print("risk-->event")
         initial_result = nlptools.make_init_result(direction=direction, search_dict=event_valid_search_dict, 
             thre=thre, init_sentence=risk, init_vec=risk_vec, use_sentiment=use_sentiment, init_sentiment=risk_sentiment, topn=topn)
         results.append(initial_result)
         result = initial_result
         for i in range(layer_num-2):
+            print("event-->event")
             result = nlptools.search_causeal_relations(direction=direction, search_dict=event_valid_search_dict, thre=thre, old_result=result,
                 use_sentiment=use_sentiment, topn=topn)
             results.append(result)
-        result = search_causeal_relations(direction=direction, search_dict=kessan_valid_search_dict, thre=thre, old_result=result,
+        print("event-->kessan")
+        result = nlptools.search_causeal_relations(direction=direction, search_dict=kessan_valid_search_dict, thre=thre, old_result=result,
                 use_sentiment=use_sentiment, topn=topn)
         results.append(result)
     node_list, edge_list = nlptools.get_node_edge(results=results, init_sentence=risk, direction=direction)
@@ -144,15 +148,7 @@ def insert_log(con, TABLENAME, date, layer_num, sector, risk, from_date, to_date
     return ID
 
 def insert_result(con, TABLENAME, ID, edge_list, date):
-    if edge_list:# if new_flag:
-    #     duplicate_sql = """
-    #     CREATE TEMPORARY TABLE tmp SELECT * FROM {TABLENAME} WHERE `EdgeID`={edge_ID};
-    #     ALTER TABLE tmp DROP `EdgeID`;
-    #     INSERT INTO {TABLENAME} SELECT 0,tmp.* FROM tmp;
-    #     DROP TABLE tmp;
-
-    #     SELECT LAST_INSERT_ID();
-    
+    if edge_list:
         insert_column = """
         insert into {TABLENAME} (RiskID, AnalyzeDate, Layer, FromNode, ToNode, Similarity) values
         """.format(TABLENAME=TABLENAME)
@@ -184,12 +180,7 @@ def delete(con, TABLENAME ,ID):
     con.commit()
 
 def insert_annotate(con, TABLENAME, edge_ID, res):
-    cur = con.cursor()   
-    #     """.format(TABLENAME=TABLENAME, edge_ID=edge_ID)
-    #     cur.execute(duplicate_sql)
-    #     edge_ID = cur.fetchall()[0]
-    #     print("new_ID", edge_ID)
-
+    cur = con.cursor()
     insert_sql = """
     INSERT INTO {TABLENAME} (EdgeID, Score) values({EdgeID}, {Score});
     """.format(TABLENAME=TABLENAME, Score=res, EdgeID=edge_ID)

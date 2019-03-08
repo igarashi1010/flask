@@ -2,7 +2,6 @@ import os
 import sys
 import models
 import nlptools
-from flask import Flask, redirect, url_for, render_template, request, g
 import gensim
 import MeCab
 import mysql.connector
@@ -10,7 +9,6 @@ import ast
 import datetime
 import pickle
 import pandas as pd
-
 from toolsconfig import dict_path, sentiment_path, model_path, sw_path, idf_path
  
  # # 以下、DB接続関連の関数
@@ -58,9 +56,7 @@ def main(input_fiile):
         "Stopwords": []
         }
 
-        node_list, edge_list, valid_search_dict, risk_sentiment, node_sentiment_dict, node_sentiment_pair_dict = models.get_relations(con, mecab, model, data_dict,  
-        tablename="fr_test2", topn=5
-        )
+        node_list, edge_list, valid_search_dict, risk_sentiment, node_sentiment_dict, node_sentiment_pair_dict = models.get_relations(con, mecab, model,data_dict, event_tablename, kessan_tablename, topn)
 
         search_count = len(valid_search_dict.keys())
         search_result = [search_count, node_list, edge_list]
@@ -80,10 +76,10 @@ if __name__ == '__main__':
     mecab = MeCab.Tagger("-d " + dict_path)
     print("loading sentiment dict....")
     sentiment_dict=nlptools.get_sentiment_dict(sentiment_path=sentiment_path)
- 
+    event_tablename = "fr_event"
+    kessan_tablename = "fr_kessan"
     with open(idf_path, "rb") as f:
         idf_dict = pickle.load(f)
-
 
     input_fiile = sys.argv[1]
     main(input_fiile)
